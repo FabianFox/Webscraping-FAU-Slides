@@ -1,2 +1,2 @@
 # Webscraping-FAU-Slides
-Slides for the workshop 'Web scrapring with R'
+Slides for the workshop 'Web scraping with R'
