@@ -183,9 +183,9 @@ Quelle: [studium.org](https://www.studium.org/erziehungswissenschaft/erlangen-n%
 
 **H**yper**t**ext **T**ransfer **P**rotocol [(HTTP)](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol)
 
-```{r http_fig, out.width = "50%", echo = FALSE}
+```{r http_fig, echo = FALSE, out.width = "50%"}
 # Source: https://code.tutsplus.com/tutorials/http-the-protocol-every-web-developer-must-know-part-1--net-31177
-include_graphics("figures/request_response_pair.png")
+include_graphics("figures/request_response_pair.PNG")
 ```
 
 - Übertragungsprotokoll, welches aus zwei Teilen besteht:
@@ -201,7 +201,7 @@ include_graphics("figures/request_response_pair.png")
     
 ```{r url_fig, out.width = "100%", echo = FALSE}
 # Source: Evans, Julia (2019) "HTTP learn your browser's language"
-include_graphics("figures/url.png")
+include_graphics("figures/url.PNG")
 ```
 
 Quelle: [Evans (2019)](https://jvns.ca/blog/2019/09/12/new-zine-on-http/)
@@ -294,7 +294,7 @@ studienort.fig
 
 ```{r sourcecode_fig, out.width = "90%", echo = FALSE}
 # Source: own
-include_graphics("figures/source_code_html.png")
+include_graphics("figures/source_code_html.PNG")
 ```
 
 ---
@@ -333,7 +333,7 @@ HTML:
     - Darstellung von HTML in R (*parsing*)
     
 ```{r tree_structure, out.width = "85%", echo = FALSE}
-include_graphics("figures/tree_structure.png")
+include_graphics("figures/tree_structure.PNG")
 ```
 
 ---
@@ -347,7 +347,7 @@ include_graphics("figures/tree_structure.png")
 
 ```{r css_fig, out.width = "30%", echo = FALSE}
 # Source: https://en.wikipedia.org/wiki/Cascading_Style_Sheets
-include_graphics("figures/css_example.png")
+include_graphics("figures/css_example.PNG")
 ```
 
 ---
@@ -363,7 +363,7 @@ include_graphics("figures/css_example.png")
 
 ```{r java_fig, out.width = "50%", echo = FALSE}
 # Source: artfacts.net
-include_graphics("figures/js_example.png")
+include_graphics("figures/js_example.PNG")
 ```
 
 --- 
@@ -379,7 +379,7 @@ Web Scraping-Projekte folgen einem generellen Schema:
 
 ```{r, out.width = "50%", echo = FALSE}
 # Source: https://r4ds.had.co.nz/introduction.html
-include_graphics("figures/data_science_wflow.png")
+include_graphics("figures/data_science_wflow.PNG")
 ```
 
 Quelle: [Wickham & Grolemund (2018)](https://r4ds.had.co.nz/introduction.html)
@@ -390,7 +390,7 @@ Quelle: [Wickham & Grolemund (2018)](https://r4ds.had.co.nz/introduction.html)
 
 ```{r, out.width = "8%", echo = FALSE}
 # Source: http://hexb.in/
-include_graphics("figures/rvest_hex.png")
+include_graphics("figures/rvest_hex.PNG")
 ```
 
 .pull-left[
@@ -501,7 +501,7 @@ Zur Extraktion von Informationen nutzen wir die Baumstruktur der HTML:
 
 ```{r tree_fig2, out.width = "80%", out.height = "85%", echo = FALSE}
 # Source: https://wiki.selfhtml.org/wiki/XML/Regeln/Baumstruktur
-include_graphics("figures/trees_structure_2.png")
+include_graphics("figures/trees_structure_2.PNG")
 ```
 
 Quelle: [selfhtml.de](https://wiki.selfhtml.org/wiki/XML/Regeln/Baumstruktur)
@@ -531,7 +531,7 @@ head(html.nodes, 4)
 ```
 
 ```{r selector_gadget, out.width = "80%", out.height = "40%", echo = FALSE}
-include_graphics("figures/selector_gadget_example.png")
+include_graphics("figures/selector_gadget_example.PNG")
 ```
 
 ---
@@ -610,7 +610,7 @@ Was benötigen wir, um Datensatz zu erstellen, der die Informationen für alle U
 
 ```{r iteration_fig, out.width = "80%", echo = FALSE}
 # Source: https://www.rstudio.com/resources/cheatsheets/#purrr
-include_graphics("figures/purrr_fig.png")
+include_graphics("figures/purrr_fig.PNG")
 ```
 
 Quelle: [purrr-Cheatsheet](https://www.rstudio.com/resources/cheatsheets/#purrr)
@@ -664,7 +664,7 @@ map(test, perc_fun) # Loop
 
 ```{r function_fig, out.width = "75%", echo = FALSE}
 # Source: https://adv-r.hadley.nz/functions.html
-include_graphics("figures/function_fig.png")
+include_graphics("figures/function_fig.PNG")
 ```
 
 Vertiefend: [Wickham 2019](https://adv-r.hadley.nz/functions.html)

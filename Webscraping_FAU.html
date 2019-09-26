@@ -159,7 +159,7 @@ Quelle: [studium.org](https://www.studium.org/erziehungswissenschaft/erlangen-n%
 
 **H**yper**t**ext **T**ransfer **P**rotocol [(HTTP)](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol)
 
-&lt;img src="figures/request_response_pair.png" width="50%" /&gt;
+&lt;img src="figures/request_response_pair.PNG" width="50%" /&gt;
 
 - Übertragungsprotokoll, welches aus zwei Teilen besteht:
 
@@ -172,7 +172,7 @@ Quelle: [studium.org](https://www.studium.org/erziehungswissenschaft/erlangen-n%
 
 - Requests erfolgen über **U**niform **R**esource **L**ocators [(URL)](https://en.wikipedia.org/wiki/URL)
     
-&lt;img src="figures/url.png" width="100%" /&gt;
+&lt;img src="figures/url.PNG" width="100%" /&gt;
 
 Quelle: [Evans (2019)](https://jvns.ca/blog/2019/09/12/new-zine-on-http/)
 
@@ -200,7 +200,7 @@ response &lt;- GET("https://www.studium.org/erziehungswissenschaft/suche/?view=u
 
 ```
 ## Response [https://www.studium.org/erziehungswissenschaft/suche/?view=uni]
-##   Date: 2019-09-26 17:21
+##   Date: 2019-09-26 17:41
 ##   Status: 200
 ##   Content-Type: text/html; charset=utf-8
 ##   Size: 78 kB
@@ -260,7 +260,7 @@ study.df &lt;- response %&gt;%
     - Rechtsklick -&gt; Seitenquelltext anzeigen
     - Aufschluss über verfügbare Informationen
 
-&lt;img src="figures/source_code_html.png" width="90%" /&gt;
+&lt;img src="figures/source_code_html.PNG" width="90%" /&gt;
 
 ---
 
@@ -298,7 +298,7 @@ HTML:
     - **D**ocument **O**bject **M**odel [(DOM)](https://en.wikipedia.org/wiki/Document_Object_Model)
     - Darstellung von HTML in R (*parsing*)
     
-&lt;img src="figures/tree_structure.png" width="85%" /&gt;
+&lt;img src="figures/tree_structure.PNG" width="85%" /&gt;
 
 ---
 
@@ -309,7 +309,7 @@ HTML:
 - beinhaltet Informationen über den Stil der HTML-Seite
 - kann genutzt werden, um Informationen zu lokalisieren (CSS-Selektoren)
 
-&lt;img src="figures/css_example.png" width="30%" /&gt;
+&lt;img src="figures/css_example.PNG" width="30%" /&gt;
 
 ---
 
@@ -322,7 +322,7 @@ HTML:
     - problematisch für unsere Scraper
     - [Beispiel](https://artfacts.net/):
 
-&lt;img src="figures/js_example.png" width="50%" /&gt;
+&lt;img src="figures/js_example.PNG" width="50%" /&gt;
 
 --- 
 
@@ -335,7 +335,7 @@ Web Scraping-Projekte folgen einem generellen Schema:
 3. Information isolieren
 4. Iteration (Schritt 2&amp;3 wiederholt ausführen)
 
-&lt;img src="figures/data_science_wflow.png" width="50%" /&gt;
+&lt;img src="figures/data_science_wflow.PNG" width="50%" /&gt;
 
 Quelle: [Wickham &amp; Grolemund (2018)](https://r4ds.had.co.nz/introduction.html)
 
@@ -343,7 +343,7 @@ Quelle: [Wickham &amp; Grolemund (2018)](https://r4ds.had.co.nz/introduction.htm
 
 # Web Scraping in R
 
-&lt;img src="figures/rvest_hex.png" width="8%" /&gt;
+&lt;img src="figures/rvest_hex.PNG" width="8%" /&gt;
 
 .pull-left[
 
@@ -466,7 +466,7 @@ Zur Extraktion von Informationen nutzen wir die Baumstruktur der HTML:
 - [XPath](https://www.w3schools.com/xml/xpath_intro.asp)
 - [CSS-Selektoren](https://www.w3schools.com/csSref/css_selectors.asp)
 
-&lt;img src="figures/trees_structure_2.png" width="80%" height="85%" /&gt;
+&lt;img src="figures/trees_structure_2.PNG" width="80%" height="85%" /&gt;
 
 Quelle: [selfhtml.de](https://wiki.selfhtml.org/wiki/XML/Regeln/Baumstruktur)
 
@@ -500,7 +500,7 @@ html.nodes &lt;- html_nodes(html.page, css = ".right")
 ## [4] &lt;div class="unten right fs2"&gt;\r\n\t\t\t\t\t199,00 Euro\r\n\t\t\t\t&lt;/ ...
 ```
 
-&lt;img src="figures/selector_gadget_example.png" width="80%" height="40%" /&gt;
+&lt;img src="figures/selector_gadget_example.PNG" width="80%" height="40%" /&gt;
 
 ---
 
@@ -546,8 +546,8 @@ str_view(string = "Wichtig ist die Zahl 42!",
          pattern = "[:digit:]+")
 ```
 
-<div id="htmlwidget-ec1cd6a93bd61bfefecc" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ec1cd6a93bd61bfefecc">{"x":{"html":"<ul>\n  <li>Wichtig ist die Zahl <span class='match'>42<\/span>!<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-daf377b94ac071866731" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-daf377b94ac071866731">{"x":{"html":"<ul>\n  <li>Wichtig ist die Zahl <span class='match'>42<\/span>!<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 
 ]
 
@@ -595,7 +595,7 @@ Was benötigen wir, um Datensatz zu erstellen, der die Informationen für alle U
 3. Iteration über alle Seiten (`map`)
 4. Datenaufbereitung ([`stringr`](https://stringr.tidyverse.org/), [`dplyr`](https://dplyr.tidyverse.org/))
 
-&lt;img src="figures/purrr_fig.png" width="80%" /&gt;
+&lt;img src="figures/purrr_fig.PNG" width="80%" /&gt;
 
 Quelle: [purrr-Cheatsheet](https://www.rstudio.com/resources/cheatsheets/#purrr)
 
@@ -663,7 +663,7 @@ map(test, perc_fun) # Loop
 
 .pull-right[
 
-&lt;img src="figures/function_fig.png" width="75%" /&gt;
+&lt;img src="figures/function_fig.PNG" width="75%" /&gt;
 
 Vertiefend: [Wickham 2019](https://adv-r.hadley.nz/functions.html)
 
