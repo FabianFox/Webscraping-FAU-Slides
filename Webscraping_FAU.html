@@ -4,7 +4,7 @@
     <title>Web Scraping mit R</title>
     <meta charset="utf-8" />
     <meta name="author" content="Fabian Gülzau" />
-    <meta name="date" content="2019-09-26" />
+    <meta name="date" content="2019-09-27" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
     <script src="libs/htmlwidgets/htmlwidgets.js"></script>
@@ -19,7 +19,7 @@ class: center, middle, inverse, title-slide
 # Web Scraping mit R
 ### Fabian Gülzau
 ### Humboldt-Universität zu Berlin
-### 2019-09-26
+### 2019-09-27
 
 ---
 
@@ -42,7 +42,7 @@ class: center, middle, inverse, title-slide
 
 # Zur Präsentation
 
-- Folien sind online verfügbar: https://github.com/FabianFox/Webscraping-FAU-Slides
+- Folien sind online verfügbar: https://github.com/FabianFox/Webscraping-FAU- ([Direktlink](https://fabianfox.github.io/Webscraping-FAU-Slides/Webscraping_FAU.html#1))
 - Beispiele auf [GitHub](https://github.com/FabianFox/Webscraping-FAU-/tree/master/code)
 - Benötigte Pakete über: 
 
@@ -192,15 +192,13 @@ Quelle: [Evans (2019)](https://jvns.ca/blog/2019/09/12/new-zine-on-http/)
 
 
 ```r
-# install.packages("httr")
-p_load(httr)
 response &lt;- GET("https://www.studium.org/erziehungswissenschaft/suche/?view=uni") %&gt;%
   print()
 ```
 
 ```
 ## Response [https://www.studium.org/erziehungswissenschaft/suche/?view=uni]
-##   Date: 2019-09-26 17:41
+##   Date: 2019-09-27 15:30
 ##   Status: 200
 ##   Content-Type: text/html; charset=utf-8
 ##   Size: 78 kB
@@ -546,8 +544,10 @@ str_view(string = "Wichtig ist die Zahl 42!",
          pattern = "[:digit:]+")
 ```
 
-<div id="htmlwidget-daf377b94ac071866731" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-daf377b94ac071866731">{"x":{"html":"<ul>\n  <li>Wichtig ist die Zahl <span class='match'>42<\/span>!<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-2f99d1423b8a57936f75" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2f99d1423b8a57936f75">{"x":{"html":"<ul>\n  <li>Wichtig ist die Zahl <span class='match'>42<\/span>!<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+
+- RegEx ist [kein Ersatz](https://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags/1732454#1732454) für 'html_nodes'
 
 ]
 
@@ -561,27 +561,27 @@ in numerische Werte umwandeln müssen.
 
 ```r
 html.text &lt;- html.text %&gt;%
-  str_replace_all(., "(\\r|\\t|\\n)", "") %&gt;%
-  str_extract(., "[:digit:]+,|.[:digit:]+") %&gt;%
+  str_extract(., "[:digit:]+(,?|.?)[:digit:]+") %&gt;%
+  str_replace_all(., "\\.", "") %&gt;%
   str_replace_all(., ",", ".") %&gt;%
-  str_trim(., side = "both") %&gt;%
+  parse_number() %&gt;%
   enframe()
 ```
 
 
 ```
 ## # A tibble: 9 x 2
-##    name value
-##   &lt;int&gt; &lt;chr&gt;
-## 1     1 107  
-## 2     2 39   
-## 3     3 84   
-## 4     4 199. 
-## 5     5 8.   
-## 6     6 &lt;NA&gt; 
-## 7     7 .700 
-## 8     8 &lt;NA&gt; 
-## 9     9 449
+##    name     value
+##   &lt;int&gt;     &lt;dbl&gt;
+## 1     1 107500   
+## 2     2  39628   
+## 3     3     84   
+## 4     4    199   
+## 5     5      8.83
+## 6     6     NA   
+## 7     7   1700   
+## 8     8     NA   
+## 9     9    449
 ```
 
 ---
@@ -773,13 +773,11 @@ Vorgehen:
 # (C) Daten bereinigen
 uni.df &lt;- uni.df %&gt;%
   mutate(value = 
-           str_extract_all(value, "[:digit:]+,|.[:digit:]+") %&gt;%
-           map(., paste0, collapse = "") %&gt;%
-           unlist() %&gt;%
-           str_replace_all("\\.", "") %&gt;%
-           str_replace_all(., ",", "\\.") %&gt;%
-           parse_number()
-  )
+           str_extract(value, "[:digit:]+(,?|.?)[:digit:]+") %&gt;%
+           str_replace_all(., "\\.", "") %&gt;%
+           str_replace_all(., ",", ".") %&gt;%
+           parse_number() 
+         )
 ```
 
 
@@ -883,7 +881,7 @@ uni.df &lt;- uni.df %&gt;%
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; augsburg &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 5.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; anzahl_kinos &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
@@ -987,11 +985,12 @@ APIs erlauben die authentifizierte Abfrage von Informationen. Benötigt wird:
 
 
 ```r
+# api_key &lt;- "XXXXXXXXXXXXXXXX"
+
 query &lt;- get_content(query = "\"kulturelle Bildung\"", limit = 250,
                      api_key = api_key) # authentifizieren
 
-map(query$content, 1) %&gt;%
-  names()
+names(query$content)
 ```
 
 
@@ -1047,8 +1046,8 @@ zeit.df &lt;- tibble(
 # 4. Weitere Beispiele und Anwendungen
 
 - JavaScript-Seiten: [ArtFacts](https://github.com/FabianFox/Webscraping-FAU-/blob/master/code/ArtFacts-Scraper.R)
-- weitere Beispiele... (Transfermarkt, GIZ, UN-Resolutionen)
-- Arbeiten mit PDF-Dokumenten: [`tabulizer`](https://github.com/FabianFox/Webscraping-FAU-/blob/master/code/reading_pdf_example.R) &amp; 'pdftools'
+- Weitere Beispiele... (Transfermarkt, GIZ, UN-Resolutionen)
+- Arbeiten mit PDF-Dokumenten: [`tabulizer`](https://github.com/FabianFox/Webscraping-FAU-/blob/master/code/reading_pdf_example.R), [`pdftools`](https://github.com/ropensci/pdftools) &amp; [`tesseract`](https://cran.r-project.org/web/packages/tesseract/vignettes/intro.html)
 - Diskussion eigener Projekte
 
 ---

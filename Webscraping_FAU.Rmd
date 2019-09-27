@@ -19,7 +19,7 @@ options(htmltools.dir.version = FALSE)
 
 if(!require("pacman")) install.packages("pacman")
 p_load(tidyverse, rvest, httr, robotstxt, qdap, janitor, lubridate,
-       knitr, kableExtra, cowplot, eurostat, ggrepel, rzeit2)
+       knitr, kableExtra, ggrepel, rzeit2, eurostat)
 ```
 
 1. Einleitung
@@ -36,7 +36,7 @@ p_load(tidyverse, rvest, httr, robotstxt, qdap, janitor, lubridate,
 
 # Zur Präsentation
 
-- Folien sind online verfügbar: https://github.com/FabianFox/Webscraping-FAU-Slides
+- Folien sind online verfügbar: https://github.com/FabianFox/Webscraping-FAU- ([Direktlink](https://fabianfox.github.io/Webscraping-FAU-Slides/Webscraping_FAU.html#1))
 - Beispiele auf [GitHub](https://github.com/FabianFox/Webscraping-FAU-/tree/master/code)
 - Benötigte Pakete über: 
 
@@ -224,8 +224,6 @@ include_graphics("figures/loop_url.png")
 - `GET`-Abfrage mit `httr::GET` und Antwort des Servers in R
 
 ```{r, echo = TRUE, eval = TRUE}
-# install.packages("httr")
-p_load(httr)
 response <- GET("https://www.studium.org/erziehungswissenschaft/suche/?view=uni") %>%
   print()
 ```
@@ -575,6 +573,8 @@ str_view(string = "Wichtig ist die Zahl 42!",
          pattern = "[:digit:]+")
 ```
 
+- RegEx ist [kein Ersatz](https://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags/1732454#1732454) für 'html_nodes'
+
 ]
 
 ---
@@ -586,10 +586,10 @@ in numerische Werte umwandeln müssen.
 
 ```{r studium_regex, echo = TRUE, eval = TRUE}
 html.text <- html.text %>%
-  str_replace_all(., "(\\r|\\t|\\n)", "") %>%
-  str_extract(., "[:digit:]+,|.[:digit:]+") %>%
+  str_extract(., "[:digit:]+(,?|.?)[:digit:]+") %>%
+  str_replace_all(., "\\.", "") %>%
   str_replace_all(., ",", ".") %>%
-  str_trim(., side = "both") %>%
+  parse_number() %>%
   enframe()
 ```
 
@@ -754,13 +754,11 @@ Vorgehen:
 # (C) Daten bereinigen
 uni.df <- uni.df %>%
   mutate(value = 
-           str_extract_all(value, "[:digit:]+,|.[:digit:]+") %>%
-           map(., paste0, collapse = "") %>%
-           unlist() %>%
-           str_replace_all("\\.", "") %>%
-           str_replace_all(., ",", "\\.") %>%
-           parse_number()
-  )
+           str_extract(value, "[:digit:]+(,?|.?)[:digit:]+") %>%
+           str_replace_all(., "\\.", "") %>%
+           str_replace_all(., ",", ".") %>%
+           parse_number() 
+         )
 ```
 
 ```{r cleaning_C_show, echo = FALSE, eval = TRUE}
@@ -919,11 +917,12 @@ include_graphics("figures/rzeit2.png")
 # Kulturelle Bildung in der ZEIT
 
 ```{r rzeit2_exm, echo = TRUE, eval = FALSE}
+# api_key <- "XXXXXXXXXXXXXXXX"
+
 query <- get_content(query = "\"kulturelle Bildung\"", limit = 250,
                      api_key = api_key) # authentifizieren
 
-map(query$content, 1) %>%
-  names()
+names(query$content)
 ```
 
 ```{r rzeit2_load, echo = FALSE, eval = TRUE}
@@ -984,8 +983,8 @@ zeit.df %>%
 # 4. Weitere Beispiele und Anwendungen
 
 - JavaScript-Seiten: [ArtFacts](https://github.com/FabianFox/Webscraping-FAU-/blob/master/code/ArtFacts-Scraper.R)
-- weitere Beispiele... (Transfermarkt, GIZ, UN-Resolutionen)
-- Arbeiten mit PDF-Dokumenten: [`tabulizer`](https://github.com/FabianFox/Webscraping-FAU-/blob/master/code/reading_pdf_example.R) & 'pdftools'
+- Weitere Beispiele... (Transfermarkt, GIZ, UN-Resolutionen)
+- Arbeiten mit PDF-Dokumenten: [`tabulizer`](https://github.com/FabianFox/Webscraping-FAU-/blob/master/code/reading_pdf_example.R), [`pdftools`](https://github.com/ropensci/pdftools) & [`tesseract`](https://cran.r-project.org/web/packages/tesseract/vignettes/intro.html)
 - Diskussion eigener Projekte
 
 ---
